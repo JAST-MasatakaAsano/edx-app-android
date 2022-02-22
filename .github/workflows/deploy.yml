@@ -1,0 +1,46 @@
+# deploy
+
+name: deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        type: choice
+        description: gradle task
+        options: 
+        - bundleProdDebug
+        - bundleProdRelease
+        - assembleProdDebug
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+#    - name: Show inputs
+#      run: |
+#        echo "task: ${{ github.event.inputs.task }}"
+
+    - uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt' # See 'Supported distributions' for available options
+        java-version: '8'
+
+#    - name: Restore keystore
+#      run: echo "${{ secrets.DEBUG_KEYSTORE_BASE64 }}" | base64 -d > ./OpenEdXMobile/${{secrets.DEBUG_KEYSTORE_STORE_FILE}}
+
+#    - name: Build App Bundle
+#      env:
+#        DEBUG_KEYSTORE_STORE_FILE: ${{secrets.DEBUG_KEYSTORE_STORE_FILE}}
+#        DEBUG_KEYSTORE_STORE_PASSWORD: ${{secrets.DEBUG_KEYSTORE_STORE_PASSWORD}}
+#        DEBUG_KEYSTORE_KEY_ALIAS: ${{secrets.DEBUG_KEYSTORE_KEY_ALIAS}}
+#        DEBUG_KEYSTORE_KEY_PASSWORD: ${{secrets.DEBUG_KEYSTORE_KEY_PASSWORD}}
+#      run: ./gradlew ${{ github.event.inputs.task }}
+
+    - run: ./gradlew bundleProdRelease
+
