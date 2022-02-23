@@ -42,7 +42,11 @@ jobs:
 #        DEBUG_KEYSTORE_KEY_PASSWORD: ${{secrets.DEBUG_KEYSTORE_KEY_PASSWORD}}
 #      run: ./gradlew ${{ github.event.inputs.task }}
 
-    - run: sed -i '' 's/org.edx.mobile/${{ env.application-id }}/g' ./constants.gradle
+    - run: |
+        pwd
+        ls
+
+    - run: sed -i '' 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
 
     - run: ./gradlew bundleProdRelease
 
