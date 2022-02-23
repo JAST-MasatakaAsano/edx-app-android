@@ -9,8 +9,9 @@ on:
         type: choice
         description: Application Id
         options: 
-        - org.gacco.mobile
         - org.gacco.mobile.sandbox
+        - org.gacco.mobile
+        - org.edx.mobile
         - bundleProdRelease
         - assembleProdDebug
 
@@ -43,7 +44,7 @@ jobs:
 #        DEBUG_KEYSTORE_KEY_PASSWORD: ${{secrets.DEBUG_KEYSTORE_KEY_PASSWORD}}
 #      run: ./gradlew ${{ github.event.inputs.task }}
 
-    - run: sed -i 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
+    - run: sed -i 's/org.edx.mobile/${{ github.event.inputs.application-id }}/g' constants.gradle
 
     - run: ./gradlew bundleProdRelease
 
