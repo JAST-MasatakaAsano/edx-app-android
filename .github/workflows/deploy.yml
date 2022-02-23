@@ -46,7 +46,15 @@ jobs:
 #      run: ./gradlew ${{ github.event.inputs.task }}
 
     - run: sed -i 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
-    - run: cat constants.gradle
+
+    - run: echo "build-number=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+      env:
+        TZ: 'Asia/Tokyo'
+
+    - uses: chkfung/android-version-actions@v1.1
+        with:
+          gradlePath: OpenEdXMobile/build.gradle
+          versionCode: ${{env.build-number}}
 
     - run: ./gradlew bundleProdRelease
 
