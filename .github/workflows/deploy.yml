@@ -50,10 +50,10 @@ jobs:
       env:
         TZ: 'Asia/Tokyo'
 
-    - uses: chkfung/android-version-actions@v1.1
-      with:
-        gradlePath: OpenEdXMobile/build.gradle
-        versionCode: ${{env.build-number}}
+#    - uses: chkfung/android-version-actions@v1.1
+#      with:
+#        gradlePath: OpenEdXMobile/build.gradle
+#        versionCode: ${{env.build-number}}
 
     - run: ./gradlew bundleProdRelease
 
