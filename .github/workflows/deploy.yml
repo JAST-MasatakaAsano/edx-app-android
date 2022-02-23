@@ -15,14 +15,15 @@ on:
         - bundleProdRelease
         - assembleProdDebug
 
+env:
+  application-id: ${{ github.event.inputs.application-id }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-#    - name: Show inputs
-#      run: |
-#        echo "task: ${{ github.event.inputs.task }}"
+    - run: echo ${{github.ref}}
 
     - uses: actions/checkout@v2
       with:
@@ -44,7 +45,7 @@ jobs:
 #        DEBUG_KEYSTORE_KEY_PASSWORD: ${{secrets.DEBUG_KEYSTORE_KEY_PASSWORD}}
 #      run: ./gradlew ${{ github.event.inputs.task }}
 
-    - run: sed -i 's/org.edx.mobile/${{ github.event.inputs.application-id }}/g' constants.gradle
+    - run: sed -i 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
     - run: cat constants.gradle
 
     - run: ./gradlew bundleProdRelease
@@ -62,6 +63,6 @@ jobs:
     - uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_DEVELOP }}
-        packageName: ${{ github.event.inputs.application-id }}
+        packageName: ${{ env.application-id }}
         releaseFiles: OpenEdXMobile/build/outputs/bundle/prodRelease/OpenEdXMobile.aab
         track: internal
