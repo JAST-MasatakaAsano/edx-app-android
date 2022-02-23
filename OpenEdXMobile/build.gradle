@@ -88,6 +88,11 @@ def getVersionName = { ->
  * @return An integer representation of the string returned by getVersionName()
  */
 def getVersionCode = { ->
+
+    if (System.getenv("build-number") != null) {
+        return System.getenv("build-number")
+    }
+
     try {
         def versionName = getVersionName()
         def semVer = versionName.split('\\.')
