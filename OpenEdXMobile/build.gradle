@@ -342,7 +342,7 @@ android {
 
 //        versionCode getVersionCode()
 //        versionName getVersionName()
-        versionCode 3000006
+        versionCode 3000007
         versionName "0.0.1"
 
         renderscriptTargetApi 22
