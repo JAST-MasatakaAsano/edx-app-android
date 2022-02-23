@@ -73,4 +73,4 @@ jobs:
         packageName: ${{ env.application-id }}
         releaseFiles: OpenEdXMobile/build/outputs/bundle/prodRelease/OpenEdXMobile.aab
         track: internal
-        status: completed
+        status: draft
