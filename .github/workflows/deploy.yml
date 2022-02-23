@@ -45,6 +45,7 @@ jobs:
 #      run: ./gradlew ${{ github.event.inputs.task }}
 
     - run: sed -i 's/org.edx.mobile/${{ github.event.inputs.application-id }}/g' constants.gradle
+    - run: cat constants.gradle
 
     - run: ./gradlew bundleProdRelease
 
