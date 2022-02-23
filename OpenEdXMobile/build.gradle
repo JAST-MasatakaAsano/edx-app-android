@@ -342,8 +342,8 @@ android {
 
 //        versionCode getVersionCode()
 //        versionName getVersionName()
-        versionCode 3000005
-        versionName "3.0.3"
+        versionCode 3000006
+        versionName "0.0.1"
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
