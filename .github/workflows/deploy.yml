@@ -9,9 +9,8 @@ on:
         type: choice
         description: Application Id
         options: 
-        - org.gacco.mobile.sandbox
         - org.gacco.mobile
-        - org.edx.mobile
+        - org.gacco.mobile.sandbox
         - bundleProdRelease
         - assembleProdDebug
 

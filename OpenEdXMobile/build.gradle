@@ -89,10 +89,6 @@ def getVersionName = { ->
  */
 def getVersionCode = { ->
 
-    if (System.getenv("build-number") != null) {
-        return System.getenv("build-number")
-    }
-
     try {
         def versionName = getVersionName()
         def semVer = versionName.split('\\.')
@@ -344,8 +340,10 @@ android {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
 
-        versionCode getVersionCode()
-        versionName getVersionName()
+//        versionCode getVersionCode()
+//        versionName getVersionName()
+        versionCode 1
+        versionName 0.0.1
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
