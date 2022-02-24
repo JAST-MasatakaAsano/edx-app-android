@@ -9,10 +9,8 @@ on:
         type: choice
         description: Application Id
         options: 
-        - org.gacco.mobile
+        - org.prototype.mobile
         - org.gacco.mobile.sandbox
-        - bundleProdRelease
-        - assembleProdDebug
 
 env:
   application-id: ${{ github.event.inputs.application-id }}
@@ -46,14 +44,14 @@ jobs:
 
     - run: sed -i 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
 
-    - run: echo "build-number=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
-      env:
-        TZ: 'Asia/Tokyo'
+#    - run: echo "build-number=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
+#      env:
+#        TZ: 'Asia/Tokyo'
 
-#    - uses: chkfung/android-version-actions@v1.1
-#      with:
-#        gradlePath: OpenEdXMobile/build.gradle
-#        versionCode: ${{env.build-number}}
+    - uses: chkfung/android-version-actions@v1.1
+      with:
+        gradlePath: OpenEdXMobile/build.gradle
+        versionCode: ${{ github.run_number }}
 
     - run: ./gradlew bundleProdRelease
 
@@ -72,4 +70,4 @@ jobs:
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON_DEVELOP }}
         packageName: ${{ env.application-id }}
         releaseFiles: OpenEdXMobile/build/outputs/bundle/prodRelease/OpenEdXMobile.aab
-        track: internalsharing
+        track: internal
