@@ -340,10 +340,8 @@ android {
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
 
-//        versionCode getVersionCode()
-//        versionName getVersionName()
-        versionCode 1
-        versionName "0.0.1"
+        versionCode 1 //getVersionCode()
+        versionName "0.0.1" //getVersionName()
 
         renderscriptTargetApi 22
         renderscriptSupportModeEnabled true
