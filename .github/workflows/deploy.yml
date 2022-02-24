@@ -52,6 +52,7 @@ jobs:
       with:
         gradlePath: OpenEdXMobile/build.gradle
         versionCode: ${{ github.run_number }}
+    - run: cat OpenEdXMobile/build.gradle
 
     - run: ./gradlew bundleProdRelease
 
@@ -71,3 +72,4 @@ jobs:
         packageName: ${{ env.application-id }}
         releaseFiles: OpenEdXMobile/build/outputs/bundle/prodRelease/OpenEdXMobile.aab
         track: internal
+        status: draft
