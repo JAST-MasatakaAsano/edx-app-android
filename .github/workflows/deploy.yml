@@ -9,8 +9,8 @@ on:
         type: choice
         description: Application Id
         options: 
-        - org.prototype.mobile
         - org.gacco.mobile.sandbox
+        - org.prototype.mobile
 
 env:
   application-id: ${{ github.event.inputs.application-id }}
@@ -22,6 +22,9 @@ jobs:
     steps:
     - run: echo ${{github.ref}}
 
+    - run: echo "application-id=org.prototype.mobile" >> $GITHUB_ENV
+      if: contains(github.ref, 'develop')
+
     - uses: actions/checkout@v2
       with:
         persist-credentials: false
@@ -31,28 +34,15 @@ jobs:
         distribution: 'adopt' # See 'Supported distributions' for available options
         java-version: '8'
 
-#    - name: Restore keystore
-#      run: echo "${{ secrets.DEBUG_KEYSTORE_BASE64 }}" | base64 -d > ./OpenEdXMobile/${{secrets.DEBUG_KEYSTORE_STORE_FILE}}
-
-#    - name: Build App Bundle
-#      env:
-#        DEBUG_KEYSTORE_STORE_FILE: ${{secrets.DEBUG_KEYSTORE_STORE_FILE}}
-#        DEBUG_KEYSTORE_STORE_PASSWORD: ${{secrets.DEBUG_KEYSTORE_STORE_PASSWORD}}
-#        DEBUG_KEYSTORE_KEY_ALIAS: ${{secrets.DEBUG_KEYSTORE_KEY_ALIAS}}
-#        DEBUG_KEYSTORE_KEY_PASSWORD: ${{secrets.DEBUG_KEYSTORE_KEY_PASSWORD}}
-#      run: ./gradlew ${{ github.event.inputs.task }}
-
     - run: sed -i 's/org.edx.mobile/${{ env.application-id }}/g' constants.gradle
 
-#    - run: echo "build-number=$(date +'%y%m%d%H%M')" >> $GITHUB_ENV
-#      env:
-#        TZ: 'Asia/Tokyo'
+    - run: sed -i 's/config.yaml/release_config.yaml/g' OpenEdXMobile/default_config/edx.properties
+      if: contains(github.ref, 'develop')
 
     - uses: chkfung/android-version-actions@v1.1
       with:
         gradlePath: OpenEdXMobile/build.gradle
         versionCode: ${{ github.run_number }}
-    - run: cat OpenEdXMobile/build.gradle
 
     - run: ./gradlew bundleProdRelease
 
